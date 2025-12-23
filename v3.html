@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP Voter Service Portal</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 10px; }
+        .main-card { max-width: 550px; margin: 30px auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .header { background: #2c3e50; color: white; padding: 20px; text-align: center; }
+        .tab-container { display: flex; background: #ecf0f1; }
+        .tab { flex: 1; padding: 15px; text-align: center; cursor: pointer; font-weight: bold; color: #7f8c8d; border-bottom: 3px solid transparent; }
+        .tab.active { color: #e67e22; border-bottom: 3px solid #e67e22; background: white; }
+        .content { padding: 30px; display: none; }
+        .content.active { display: block; }
+        select, input { width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .btn { width: 100%; padding: 15px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; color: white; }
+        .btn-pdf { background-color: #e67e22; }
+        .btn-search { background-color: #2980b9; }
+        .footer { padding: 15px; font-size: 12px; text-align: center; color: #95a5a6; background: #fafafa; }
+    </style>
+</head>
+<body>
+
+<div class="main-card">
+    <div class="header">
+        <h2>MP Voter Help Desk</h2>
+    </div>
+
+    <div class="tab-container">
+        <div class="tab active" onclick="openTab(event, 'pdfSection')">गाँव की लिस्ट (PDF)</div>
+        <div class="tab" onclick="openTab(event, 'searchSection')">नाम से खोजें (EPIC)</div>
+    </div>
+
+    <div id="pdfSection" class="content active">
+        <p>अपना जिला चुनें और गाँव/वार्ड की लिस्ट डाउनलोड करें:</p>
+        <select id="district">
+            <option value="">-- जिला चुनें --</option>
+            <option value="bhopal">Bhopal (भोपाल)</option>
+            <option value="indore">Indore (इंदौर)</option>
+            <option value="gwalior">Gwalior (ग्वालियर)</option>
+            <option value="jabalpur">Jabalpur (जबलपुर)</option>
+            <option value="ujjain">Ujjain (उज्जैन)</option>
+        </select>
+        <button class="btn btn-pdf" onclick="window.open('https://ceoelection.mp.gov.in/VL.aspx', '_blank')">PDF लिस्ट देखें</button>
+    </div>
+
+    <div id="searchSection" class="content">
+        <p>अपना Voter ID नंबर डालकर विवरण खोजें:</p>
+        <input type="text" id="epicNum" placeholder="Voter ID (EPIC) नंबर यहाँ लिखें..." style="text-transform:uppercase">
+        <button class="btn btn-search" onclick="searchByEpic()">अभी सर्च करें</button>
+        <p style="font-size: 11px; margin-top: 10px; color: #e74c3c;">* आपको आधिकारिक ECI पोर्टल पर भेजा जाएगा।</p>
+    </div>
+
+    <div class="footer">
+        सूचना का स्रोत: ceoelection.mp.gov.in एवं electoralsearch.eci.gov.in
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, content, tabs;
+        content = document.getElementsByClassName("content");
+        for (i = 0; i < content.length; i++) { content[i].classList.remove("active"); }
+        tabs = document.getElementsByClassName("tab");
+        for (i = 0; i < tabs.length; i++) { tabs[i].classList.remove("active"); }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    function searchByEpic() {
+        var epic = document.getElementById("epicNum").value;
+        if (epic === "") {
+            alert("कृपया Voter ID नंबर दर्ज करें");
+        } else {
+            // सीधे चुनाव आयोग के सर्च पोर्टल पर भेजें
+            window.open("https://electoralsearch.eci.gov.in/", "_blank");
+        }
+    }
+</script>
+
+</body>
+</html>
